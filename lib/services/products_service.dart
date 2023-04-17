@@ -11,6 +11,7 @@ class ProductsService  extends ChangeNotifier{
   final List<Product> products = [];
   late Product selectecProduct;
   bool isLoading = true;
+  bool isSaving = false;
 
   ProductsService(){
     this.loadProducts();
@@ -31,6 +32,30 @@ class ProductsService  extends ChangeNotifier{
     notifyListeners();
 
     return this.products;
+
+  }
+
+  Future saveOrCreateProduct(Product product)async{
+    isSaving = true;
+    notifyListeners();
+    if (product.id == null){
+
+    }else{
+      await this.updateProduct(product);
+    }
+
+    isSaving = false;
+    notifyListeners();
+  }
+
+  Future<String> updateProduct(Product product)async{
+    final url = Uri.https(_baseUrl,'products/${product.id}.json');
+    final resp = await http.put(url, body: product.toJson());
+    final decodedData = resp.body;
+    print(decodedData);
+
+// TODO: ACTUALIZAR 
+    return product.id!;
 
   }
 }
