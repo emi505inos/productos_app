@@ -30,7 +30,7 @@ class ProductCard extends StatelessWidget{
               right: 0,
               child: _PriceTag(product.price)),
             if(!product.available)
-             Positioned(
+             const Positioned(
               top: 0,
               left: 0,
               child: _NotAvailable()),
@@ -44,7 +44,7 @@ class ProductCard extends StatelessWidget{
   BoxDecoration _cardBorders() => BoxDecoration(
     color: Colors.white,
     borderRadius: BorderRadius.circular(25),
-    boxShadow: [
+    boxShadow: const [
       BoxShadow(
         color: Colors.black12,
         offset: Offset(0,7),
@@ -168,7 +168,12 @@ class _BackgroundImage extends StatelessWidget {
       child: Container(
         width: double.infinity,
         height: 400,
-        child: FadeInImage(
+        child: url == null
+        ? Image(
+          image: AssetImage('assets/no-image.png'),
+          fit: BoxFit.cover,
+        )
+        : FadeInImage(
           placeholder: AssetImage('assets/jar-loading.gif'),
           image: NetworkImage(url!),
           fit: BoxFit.cover,
