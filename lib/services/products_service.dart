@@ -1,12 +1,10 @@
 import 'dart:convert';
 
-
 import 'package:flutter/cupertino.dart';
 import 'package:productos_app/models/models.dart';
-import 'package:http/http.dart'as http;
+import 'package:http/http.dart' as http;
 
-class ProductsService  extends ChangeNotifier{
-
+class ProductsService extends ChangeNotifier {
   final String _baseUrl = 'flutter-varios-92dd2-default-rtdb.firebaseio.com';
   final List<Product> products = [];
   late Product selectedProduct;
@@ -14,13 +12,13 @@ class ProductsService  extends ChangeNotifier{
   bool isSaving = false;
   
 
-  ProductsService(){
+  ProductsService() {
     this.loadProducts();
   }
-  Future loadProducts() async{
+  Future loadProducts() async {
     this.isLoading = true;
     notifyListeners();
-    final url = Uri.https(_baseUrl,'products.json');
+    final url = Uri.https(_baseUrl, 'products.json');
     final resp = await http.get(url);
 
     final Map<String, dynamic> productsMap = json.decode(resp.body);
@@ -33,15 +31,13 @@ class ProductsService  extends ChangeNotifier{
     notifyListeners();
 
     return this.products;
-
   }
 
-  Future saveOrCreateProduct(Product product)async{
+  Future saveOrCreateProduct(Product product) async {
     isSaving = true;
     notifyListeners();
-    if (product.id == null){
-
-    }else{
+    if (product.id == null) {
+    } else {
       await this.updateProduct(product);
     }
 
@@ -57,7 +53,7 @@ class ProductsService  extends ChangeNotifier{
     final decodedData = resp.body;
     print(decodedData);
 
-// TODO: ACTUALIZAR 
+// TODO: ACTUALIZAR
     return product.id!;
  
   }
