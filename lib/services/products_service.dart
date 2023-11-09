@@ -9,9 +9,10 @@ class ProductsService  extends ChangeNotifier{
 
   final String _baseUrl = 'flutter-varios-92dd2-default-rtdb.firebaseio.com';
   final List<Product> products = [];
-  late Product selectecProduct;
+  late Product selectedProduct;
   bool isLoading = true;
   bool isSaving = false;
+  
 
   ProductsService(){
     this.loadProducts();
@@ -47,15 +48,17 @@ class ProductsService  extends ChangeNotifier{
     isSaving = false;
     notifyListeners();
   }
-
+  
   Future<String> updateProduct(Product product)async{
+   
     final url = Uri.https(_baseUrl,'products/${product.id}.json');
-    final resp = await http.put(url, body: product.toJson());
+    
+    final resp = await http.put(url, body: product.toRawJson());
     final decodedData = resp.body;
     print(decodedData);
 
 // TODO: ACTUALIZAR 
     return product.id!;
-
+ 
   }
 }

@@ -16,7 +16,7 @@ class ProductScreen extends StatelessWidget {
   Widget build(BuildContext context){
     final productsService = Provider.of<ProductsService>(context);
     return ChangeNotifierProvider(
-      create: (__) => ProductFormProvider(productsService.selectecProduct),
+      create: (__) => ProductFormProvider(productsService.selectedProduct),
       child: _ProductScreenBody(productsService: productsService),
       );
 
@@ -37,12 +37,12 @@ class _ProductScreenBody extends StatelessWidget {
     final productForm = Provider.of<ProductFormProvider>(context);
     return Scaffold(
       body: SingleChildScrollView(
-        keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+        // keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
         child: Column(
           children: [
             Stack(
               children: [
-                ProductImage(url: productsService.selectecProduct.picture,),
+                ProductImage(url: productsService.selectedProduct.picture,),
                 Positioned(
                   top: 60,
                   left: 20,
@@ -68,7 +68,7 @@ class _ProductScreenBody extends StatelessWidget {
         floatingActionButton: FloatingActionButton(
           child: Icon(Icons.save_outlined),
           onPressed: () async{
-            if(productForm.isValidForm())return;
+            if(!productForm.isValidForm())return;
             await productsService.saveOrCreateProduct(productForm.product);
           },),
     );
