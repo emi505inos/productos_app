@@ -1,5 +1,4 @@
-import 'package:meta/meta.dart';
-import 'dart:convert';
+import 'dart:convert' ;
 
 class Product {
     Product({

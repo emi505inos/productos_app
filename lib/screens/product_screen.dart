@@ -57,16 +57,16 @@ class _ProductScreenBody extends StatelessWidget {
                   child: IconButton(
                     onPressed:() async{
                       final picker = ImagePicker();
-                      final pickedFile  = await picker.pickImage(
+                      final PickedFile  = await picker.pickImage(
                         source:ImageSource.camera,
                         imageQuality: 100,
                         );
-                        if (pickedFile == null){
+                        if (PickedFile == null){
                           print('No selecciono nada');
                           return;
                         }
 
-                        print('Tenemos image ${pickedFile.path}');
+                        print('Tenemos image ${PickedFile.path}');
                         
                     },
                     icon: const Icon(Icons.camera_alt_outlined, size: 40, color: Colors.white,)),
