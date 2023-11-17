@@ -19,7 +19,7 @@ class HomeScreen extends StatelessWidget{
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Productos'),
+        title: const Text('Productos'),
         leading: IconButton(
           icon: const Icon(Icons.login_rounded),
           onPressed: () {

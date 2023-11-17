@@ -106,14 +106,6 @@ class _LoginForm extends StatelessWidget{
               disabledColor: Colors.grey,
               elevation: 0,
               color: Colors.deepPurple,
-              child: Container(
-                padding:  EdgeInsets.symmetric(horizontal: 80, vertical: 15),
-                child: Text(
-                  loginForm.isLoading
-                  ? 'Espere'
-                  : 'Ingresar', 
-                  style: TextStyle(color: Colors.white),),
-              ),
               onPressed: loginForm.isLoading ? null : () async{
 
                 FocusScope.of(context).unfocus();
@@ -126,10 +118,19 @@ class _LoginForm extends StatelessWidget{
                   Navigator.pushReplacementNamed(context, 'home');
                 }else{
                   //TODO Mostrar error en pantalla
-                  print(errorMessage);
+                  //print(errorMessage);
+                  NotificationService.showSnackbar(errorMessage);
                 loginForm.isLoading = false;
                 };
-              },)
+              },
+              child: Container(
+                padding:  const EdgeInsets.symmetric(horizontal: 80, vertical: 15),
+                child: Text(
+                  loginForm.isLoading
+                  ? 'Espere'
+                  : 'Ingresar', 
+                  style: const TextStyle(color: Colors.white),),
+              ),)
           ],
         ),
       ),
