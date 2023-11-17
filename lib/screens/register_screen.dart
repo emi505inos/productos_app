@@ -1,5 +1,5 @@
-import 'dart:ui';
 
+import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:productos_app/providers/login_form_provider.dart';
 import 'package:productos_app/services/services.dart';
@@ -7,7 +7,7 @@ import 'package:productos_app/ui/input_decorations.dart';
 import 'package:productos_app/widgets/widgets.dart';
 import 'package:provider/provider.dart';
 
-class LoginScreen extends StatelessWidget{
+class RegisterScreen extends StatelessWidget{
   @override
   Widget build(BuildContext context){
     return Scaffold(
@@ -20,7 +20,8 @@ class LoginScreen extends StatelessWidget{
                 child: Column(
                   children: [
                     const SizedBox(height: 10,),
-                    Text('Login', style: Theme.of(context).textTheme.headline4,),
+                    Text('Crear cuenta', style: Theme.of(context).textTheme.headline4,),
+                    
                     const SizedBox(height: 30,),
                     ChangeNotifierProvider(
                       create: (__) => LoginFormProvider(),
@@ -31,13 +32,13 @@ class LoginScreen extends StatelessWidget{
                 ),
               ),
               const SizedBox(height: 50,),
-              TextButton(
-                onPressed: () => Navigator.pushReplacementNamed(context, 'register'),
+                TextButton(
+                onPressed: () => Navigator.pushReplacementNamed(context, 'login'),
                 style: ButtonStyle(
                   overlayColor:MaterialStateProperty.all(Colors.indigo.withOpacity(0.1)),
                   shape: MaterialStateProperty.all(StadiumBorder()) 
                   ), 
-                child: const Text('Crear una nueva cuenta', style: TextStyle(fontSize: 18, color: Colors.black87),),
+                child: const Text('¿Ya tienes una cuenta?', style: TextStyle(fontSize: 18, color: Colors.black87),),
                 ),
               const SizedBox(height: 50,),
             ],
@@ -106,14 +107,6 @@ class _LoginForm extends StatelessWidget{
               disabledColor: Colors.grey,
               elevation: 0,
               color: Colors.deepPurple,
-              child: Container(
-                padding:  EdgeInsets.symmetric(horizontal: 80, vertical: 15),
-                child: Text(
-                  loginForm.isLoading
-                  ? 'Espere'
-                  : 'Ingresar', 
-                  style: TextStyle(color: Colors.white),),
-              ),
               onPressed: loginForm.isLoading ? null : () async{
 
                 FocusScope.of(context).unfocus();
@@ -121,15 +114,25 @@ class _LoginForm extends StatelessWidget{
                 if( !loginForm.isValidForm()) return;
                 loginForm.isLoading = true;
                 
-                final String? errorMessage = await authService.login(loginForm.email, loginForm.password);
+                final String? errorMessage = await authService.createUser(loginForm.email, loginForm.password);
                 if (errorMessage == null){
                   Navigator.pushReplacementNamed(context, 'home');
                 }else{
                   //TODO Mostrar error en pantalla
                   print(errorMessage);
                 loginForm.isLoading = false;
-                };
-              },)
+                }
+                
+                 //Navigator.pushReplacementNamed(context, 'home');
+              },
+              child: Container(
+                padding:  EdgeInsets.symmetric(horizontal: 80, vertical: 15),
+                child: Text(
+                  loginForm.isLoading
+                  ? 'Espere'
+                  : 'Crear', 
+                  style: TextStyle(color: Colors.white),),
+              ),)
           ],
         ),
       ),
